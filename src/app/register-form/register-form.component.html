@@ -1,0 +1,131 @@
+<div class="form-holder">
+  <form action="/" class="register-form" #registerForm="ngForm" (ngSubmit)="onSubmit($event)" (ngModelChange)="modelChangeHandler()" autocomplete="off">
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': !emailValidState && email.invalid && (email.dirty || email.touched)}">
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="registerModel.email"
+          (change)="changeHandlers.email()"
+          (ngModelChange)="modelChangeHandlers.email(email)"
+          required
+          email
+          asyncEmailValidator
+          #email="ngModel">
+        <div class="validation-notes">
+          <p>Displays errors with delay 300ms (oldstyle, but can be replaced by custom component or maybe directive)</p>
+          <p>Email: asd@asd.asd is INVALID - async validator</p>
+        </div>
+        <div class="error-holder">
+          <div class="required-error" *ngIf="email.errors?.email">Enter valid email</div>
+          <div class="required-error-async" *ngIf="email.errors?.asyncEmail">You can't use EMAIL {{email.value}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': phone.errors && (phone.dirty || phone.touched)}">
+        <input
+          type="tel"
+          placeholder="Phone"
+          name="phone"
+          [(ngModel)]="registerModel.phone"
+          pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
+          #phone="ngModel">
+        <div class="error-holder">
+          <div class="required-error" *ngIf="phone.errors?.required">Phone number is required</div>
+          <div class="required-error-pattern" *ngIf="phone.errors?.pattern">Enter valid Phone number e.g. +33923456789</div>   
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': username.invalid && (username.dirty || username.touched)}">
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          [(ngModel)]="registerModel.username"
+          required
+          minlength="4"
+          forbiddenName="Admin"
+          #username="ngModel">
+        <div class="validation-notes">
+          <p>Username should not be Admin</p>
+        </div>
+        <div class="error-holder">
+            <div class="required-error" *ngIf="username.errors?.required">Enter Username</div>
+            <div class="required-error-length" *ngIf="username.errors?.minlength">Username should not be less then 4 charts</div>
+            <div class="required-error-forbidden" *ngIf="username.errors?.forbiddenName">Username should not be Admin</div>   
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': password.invalid && (password.dirty || password.touched)}">
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="registerModel.password"
+          required
+          passwordStrength
+          #password="ngModel">
+        <div class="error-holder">
+          <div class="required-error" *ngIf="password.errors?.required">Password is required</div>
+          <div class="required-error-strength" *ngIf="password.errors?.passwordStrength">Bad Password</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)}">
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          name="confirmPassword"
+          [(ngModel)]="registerModel.confirmPassword"
+          required
+          validateEqual="password"
+          #confirmPassword="ngModel">
+        <div class="error-holder">
+            <div class="required-error" *ngIf="confirmPassword.errors?.required">Password is required</div>
+            <div class="required-error-equals" *ngIf="confirmPassword.errors?.validateEqual">Password Confiramation should be equal to Password</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder">
+        <label>Male <input type="radio" value="male" name="gender" [(ngModel)]="registerModel.gender" #gender="ngModel"></label>
+        <label>Female <input type="radio" value="female" name="gender" [(ngModel)]="registerModel.gender" #gender="ngModel"></label>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder agreed-holder"
+        [ngClass]="{'invalid-state': agreed.invalid && (agreed.dirty || agreed.touched)}">
+        <label>
+          <input type="checkbox" name="agreed" [(ngModel)]="registerModel.agreed" required #agreed="ngModel">
+           I agree to the Terms and Conditions
+        </label>
+      </div>
+    </div>
+    <div class="buttons-holder">
+      <button type="submit" [disabled]="registerForm.invalid || registerForm.status !== 'VALID'">Register Me</button>
+      <button type="reset" [disabled]="registerForm.pristine" (click)="onReset($event)">Cancel</button>
+    </div>
+    <hr>
+    <hr>
+    <hr>
+    <h3>Form model:</h3>
+    <pre>{{ registerModel | json }}</pre>
+  </form>
+</div>

@@ -1,0 +1,79 @@
+.register-form {
+    overflow: hidden;
+    font-size: 18px;
+    line-height: 24px;
+    max-width: 500px;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        position: relative;
+        overflow: hidden;
+        margin: 0 0 20px;
+    }
+
+    input[type=email],
+    input[type=password],
+    input[type=tel],
+    input[type=text],
+    textarea {
+        display: block;
+        width: 100%;
+        padding: 3px 5px;
+        border-radius: 5px;
+        border: 1px solid #666;
+        background: #fff;
+        font-size: 18px;
+        line-height: 24px;
+        outline: none;
+        transition: border-color .2s .2s;
+    }
+
+    .invalid-state {
+        input[type=email],
+        input[type=password],
+        input[type=tel],
+        input[type=text],
+        textarea {
+            border-color: #f00;
+        }
+    }
+    .valid-state {
+        input[type=email],
+        input[type=password],
+        input[type=tel],
+        input[type=text],
+        textarea {
+            border-color: #0f0;
+        }
+    }
+
+    .error-holder {
+        font-size: 12px;
+        line-height: 14px;
+        color: #f00;
+        padding: 5px 0 0;
+        display: none;
+    }
+    .invalid-state {
+        .error-holder {
+            display: block;
+        }
+    }
+
+    .agreed-holder {
+        &.invalid-state {
+            color: #f00;
+        }
+    }
+    .validation-notes {
+        font-size: 10px;
+        line-height: 13px;
+
+        p {
+            margin: 0;
+        }
+    }
+}
